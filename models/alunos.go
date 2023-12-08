@@ -18,3 +18,5 @@ func ValidaDadosDeAluno(aluno *Aluno) error {
 	}
 	return nil
 }
+
+// comentário para rodar teste

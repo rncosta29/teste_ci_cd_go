@@ -4,28 +4,29 @@ on:
   workflow_call:
 
 jobs:
-
   EC2:
+    name: ec2
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v3
+    
     - name: Download a Build Artifact
       uses: actions/download-artifact@v3.0.0
       with:
         # Artifact Name
         name: programa
-    - uses: actions/checkout@v3
 
     - name: Deploy to staging server
       uses: easingthemes/ssh-deploy@main
-      env:
+      with:
         SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
         REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
         REMOTE_USER: ${{ secrets.REMOTE_USER }}
-        TARGET: /home/${{ secrets.TARGET }}
+        TARGET: /home/${{ secrets.REMOTE_USER }}
         EXCLUDE: "postgres-data"
 
     - name: executing remote ssh commands using password
-      uses: appleboy/ssh-action@master
+      uses: appleboy/ssh-action@v1.0.0
       with:
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.REMOTE_USER }}

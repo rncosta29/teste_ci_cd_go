@@ -59,6 +59,11 @@ jobs:
         name: programa
         # A file, directory or wildcard pattern that describes what to upload
         path: main
+        
+  docker:
+    needs: build
+    uses: ./.github/workflows/Docker.yml
+    secrets: inherit
 
   Deploy_EC2:
     needs: build
